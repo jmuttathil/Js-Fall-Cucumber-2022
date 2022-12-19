@@ -1,5 +1,7 @@
 Feature: Timeline
 
-  Scenario: Verify timeline is as expected
+  Background: 
     Given I am on darksky
+
+  Scenario: Verify timeline is as expected
     Then I verify timeline is as expected

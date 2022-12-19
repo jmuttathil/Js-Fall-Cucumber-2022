@@ -10,14 +10,6 @@ Given(/^I am on facebook$/, async function () {
   await browser.url('https://www.facebook.com');
 });
 
-// When(/^I type '(.*)' as username$/, async function (username) {
-//     await loginPage.enterLoginEmail(username);
-// });
-
-// When(/^I type '(.*)' as password$/, async function (pwd) {
-//     await loginPage.enterLoginPassword(pwd);
-// });
-
 When(/^I type '(.+)' as (username|password)$/, async function (data, field) {
   switch (field.toLowerCase()) {
     case 'username':

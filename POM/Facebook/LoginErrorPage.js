@@ -4,12 +4,11 @@ class LoginErrorPage {
   commands = new Commands();
 
   // 1) LOCATORS
-  loginErrorMsg =
-    '//div[contains(text() , "The email or mobile number you entered isn’t connected to an account.")]';
+  loginErrorMsg = '//a[contains(text() , "Find your account")]';
 
   // 2) FUNCTIONS
   async isLoginErrorDisplayed() {
-    return await $(this.loginErrorMsg).isDisplayed();
+    return await this.commands.isWebElementDisplayed(this.loginErrorMsg);
   }
 }
 module.exports = LoginErrorPage;
