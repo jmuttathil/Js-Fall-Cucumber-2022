@@ -1,0 +1,10 @@
+.DS_Store
+allure-report/
+allure-results/
+node_modules/
+POM/Examples/
+Utils/Dates.js
+POM/My-JS-templates.js
+.gitignore
+POM/WDIO.js
+.vscode/extensions.json
