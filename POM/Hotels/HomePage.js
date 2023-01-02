@@ -6,6 +6,14 @@ class HomePage {
   dates = new Dates();
 
   // LOCATORS
+  // HEADER
+  displaySettingsLink = '//nav[@id="secondaryNav"]//div//button//div//div';
+
+  // DISPLAY SETTINGS
+  languageSelector = '//select[@id="language-selector"]';
+  saveButton = '//button[contains(text(),"Save")]';
+  guardarButton = '//button[contains(text(),"Guardar")]';
+
   // DESTINATION
   goingToLocator = '//button[@aria-label="Going to"]';
   goingToDestinationLocator =
@@ -27,7 +35,44 @@ class HomePage {
   leftSideCalendarHeaderLocator =
     '(//div[@class="uitk-date-picker-month"])[1]//h2';
 
+  // TRAVELERS
+
+  travelersLocator = '//button[@data-stid="open-room-picker"]/../../../div';
+  decreaseTravelersLocator =
+    '//*[@id="traveler_selector_adult_step_input-0-decrease-title"]/../../../span';
+  adultTravelersLocator =
+    '//button[@data-stid="open-room-picker"]/../../../div';
+  increaseTravelersLocator =
+    '//*[@id="traveler_selector_adult_step_input-0-increase-title"]/../../../span';
+
   // FUNCTIONS
+
+  async getLanguageOption() {
+    var currentLanguage = await this.commands.getTextOfWebElement(
+      this.displaySettingsLink
+    );
+    return currentLanguage;
+  }
+
+  async openDisplaySettings() {
+    await this.commands.clickWebElement(this.displaySettingsLink);
+  }
+
+  async selectLanguageOption(languageOption) {
+    await this.commands.selectDataInDropdown(
+      this.languageSelector,
+      languageOption
+    );
+  }
+
+  async clickSaveButton() {
+    await this.commands.clickWebElement(this.saveButton);
+  }
+
+  async clickGuardarButton() {
+    await this.commands.clickWebElement(this.guardarButton);
+  }
+
   // DESTINATION
   async enterDestination(destination) {
     await this.commands.clickWebElement(this.goingToLocator);

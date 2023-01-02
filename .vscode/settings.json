@@ -3,6 +3,7 @@
         "birthdate",
         "darksky",
         "firstname",
+        "guardar",
         "lastname",
         "tommorowsDate",
         "wdio"
