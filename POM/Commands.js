@@ -231,12 +231,17 @@ class Commands {
     return await browser.getWindowHandles();
   }
 
-  /**
-   * Generic function to switch to a new handle
-   * name: switchToWindowHandle
-   * input: newHandle
-   *
-   */
+  async closeBrowserWindow() {
+    return await browser.closeWindow();
+  }
+  async switchWindowByURL(URL) {
+    return await browser.switchWindow(URL);
+  }
+
+  async switchWindowByName(tabName) {
+    return await browser.switchWindow(tabName);
+  }
+
   async switchToWindowHandle(newHandle) {
     return await browser.switchToWindow(newHandle);
   }

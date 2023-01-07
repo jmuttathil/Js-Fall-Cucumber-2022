@@ -9,10 +9,16 @@ class HomePage {
   // HEADER
   displaySettingsLink = '//nav[@id="secondaryNav"]//div//button//div//div';
 
+
   // DISPLAY SETTINGS
   languageSelector = '//select[@id="language-selector"]';
   saveButton = '//button[contains(text(),"Save")]';
   guardarButton = '//button[contains(text(),"Guardar")]';
+
+  // SIGN IN MENU
+  signInLink = '//button[contains(text(),"Sign in")]';
+  feedbackLink =
+    '//button[contains(text(),"Sign in")]/following-sibling::div//div//a[contains(text(),"Feedback")]';
 
   // DESTINATION
   goingToLocator = '//button[@aria-label="Going to"]';
@@ -71,6 +77,23 @@ class HomePage {
 
   async clickGuardarButton() {
     await this.commands.clickWebElement(this.guardarButton);
+  }
+
+  // SIGN IN MENU
+  async clickOnWebElement(locator) {
+    switch (locator) {
+      case 'Sign in':
+        await this.commands.clickWebElement(this.signInLink);
+        break;
+      case 'Feedback':
+        await this.commands.clickWebElement(this.feedbackLink);
+        break;
+      case 'Submit button':
+        await this.commands.clickWebElement(this.submitButton);
+        break;
+      default:
+        break;
+    }
   }
 
   // DESTINATION

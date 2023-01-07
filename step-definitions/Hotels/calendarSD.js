@@ -8,6 +8,8 @@ dates = new Dates();
 
 Given(/^I am on hotels$/, async function () {
   await browser.url('https://www.hotels.com');
+  browser.maximizeWindow();
+  await browser.pause(2000);
 });
 
 When(/^I click on the calendar$/, async function () {
@@ -38,4 +40,3 @@ When(/^I verify past dates are disabled$/, async function () {
     'Past dates are NOT disabled'
   ).to.be.true;
 });
- 
