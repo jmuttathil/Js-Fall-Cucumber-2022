@@ -66,6 +66,15 @@ class Commands {
   }
 
   /**
+   * Generic function to scroll to a webElement
+   * input: string(locator)
+   */
+  async scrollToWebElement(locator) {
+    const webElem = await $(locator);
+    await webElem.scrollIntoView();
+  }
+
+  /**
    * Generic function to click a WebElement
    * name: clickWebElement
    * input: string(locator)

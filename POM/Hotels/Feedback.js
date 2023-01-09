@@ -44,7 +44,7 @@ class Feedback {
   // ERROR: PLEASE FILL IN THE REQUIRED INFORMATION HIGHLIGHTED BELOW.
   requiredInfoErrorMessage = '//div[@id="required"]';
 
-  // ERROR: THANK YOU FOR YOUR FEEDBACK.
+  // MESSAGE: THANK YOU FOR YOUR FEEDBACK.
   thankYouMessage = '//div[@id="thank-you"]';
 
   // FUNCTIONS
@@ -57,8 +57,9 @@ class Feedback {
         await this.commands.clickWebElement(this.feedbackLink);
         break;
       case 'Submit button':
+        console.log(`\n *submit button* \n`);
         await this.commands.clickWebElement(this.submitButton);
-        await browser.pause(4000);
+        await browser.pause(1000);
         break;
       default:
         break;
@@ -66,7 +67,7 @@ class Feedback {
   }
 
   async changeActiveWindow(tabName) {
-    await browser.pause(2000);
+    await browser.pause(1000);
     let allHandles = [];
     allHandles = await this.commands.getHandles();
     let targetHandle = allHandles[allHandles.length - 1];
@@ -76,7 +77,9 @@ class Feedback {
   async verifyErrorIsDisplayed(errorMsg) {
     switch (errorMsg) {
       case 'Please fill in the required information highlighted below.':
-        return await $(this.requiredInfoErrorMessage).isDisplayed();
+        return await this.commands.isWebElementDisplayed(
+          this.requiredInfoErrorMessage
+        );
         break;
       default:
         break;
@@ -85,8 +88,18 @@ class Feedback {
 
   async verifyIsDisplayed(webElement) {
     switch (webElement) {
-      case 'star boxes section is in a red dotted box':
-        return await $(this.requiredBoxPageRating).isDisplayed();
+      case 'STAR RATING SECTION IN A RED DOTTED BOX':
+        return await this.commands.isWebElementDisplayed(
+          this.requiredBoxPageRating
+        );
+        break;
+      case 'PLEASE FILL IN THE REQUIRED INFORMATION HIGHLIGHTED BELOW message':
+        return await this.commands.isWebElementDisplayed(
+          this.requiredInfoErrorMessage
+        );
+        break;
+      case 'THANK YOU FOR YOUR FEEDBACK message':
+        return await this.commands.isWebElementDisplayed(this.thankYouMessage);
         break;
       default:
         break;

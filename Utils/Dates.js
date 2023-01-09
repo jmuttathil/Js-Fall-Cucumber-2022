@@ -162,10 +162,22 @@ class Dates {
     return time.format('MMMM D YYYY');
   }
 
+  format_MMMM_YYYY(time) {
+    return time.format('MMMM YYYY');
+  }
+
   // TIME CALCULATION
   addTime(startTime, interval, unit) {
     const newTime = moment(startTime).add(interval, unit);
     return newTime;
+  }
+
+  calculateMonthsDiff(startTime, endTime) {
+    const startMonth = moment(startTime, 'MMMM YYYY');
+    const endMonth = moment(endTime, 'MMMM YYYY');
+
+    const monthsDiff = startMonth.diff(endMonth, 'months', true);
+    return monthsDiff;
   }
 }
 
