@@ -8,7 +8,7 @@ Feature: Calendar
     And on HomePage I select today as Check-in
     And on HomePage I select tomorrow as Check-out
 
-  @sprint1
+@sprint1 @TC-17
   Scenario: Verify past dates and back button are disabled in calendar
     When on HomePage I click on Dates
     When on HomePage I navigate calendar to current month

@@ -2,19 +2,20 @@ Feature: travelers
 
     Background:
         Given I am on hotels
-    @sprint2
+
+    @sprint1 @TC-18
     Scenario: Verify limit for adults count in a room
-        When I click on "Travelers"
-        When I select "Adults" as 6
-        When I select "Children" as 3
-        When I select first child age: 4
-        When I select second child age: Under 1
-        When I select third child age: 7
-        When I click on "Done"
-        When I verify total number of guests is correct
+        When on HomePage I click on Travelers
+        
+        When on HomePage I change Adults to 6
+        When on HomePage I change Children to 3
+
+        When on HomePage I select first child age: 4
+        When on HomePage I select second child age: Under 1
+        When on HomePage I select third child age: 7
+
+        When on HomePage I click on Done on Travelers
+        When on HomePage I verify total number of travelers is correct
 
 
 
-
-
-  

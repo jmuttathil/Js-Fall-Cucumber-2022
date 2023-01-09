@@ -2,7 +2,8 @@ Feature: getAppButton
 
     Background:
         Given I am on hotels
-    @sprint5
+
+    @sprint1 @TC-30
     Scenario: Verify invalid phone number produces error message
         When  on HomePage I scroll to Get the app button
         When  on HomePage I enter "0000000000" in Phone number

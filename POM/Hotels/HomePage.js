@@ -54,12 +54,43 @@ class HomePage {
   // TRAVELERS
 
   travelersLocator = '//button[@data-stid="open-room-picker"]/../../../div';
-  decreaseTravelersLocator =
+
+  totalTravelersLocator = '//button[@data-stid="open-room-picker"]/../input';
+  adultTravelersLocator = '//input[@id="traveler_selector_adult_step_input-0"]';
+  childTravelersLocator =
+    '//input[@id="traveler_selector_children_step_input-0"]';
+
+  // ADULTS
+
+  decreaseAdultsLocator =
     '//*[@id="traveler_selector_adult_step_input-0-decrease-title"]/../../../span';
-  adultTravelersLocator =
-    '//button[@data-stid="open-room-picker"]/../../../div';
-  increaseTravelersLocator =
+  increaseAdultsLocator =
     '//*[@id="traveler_selector_adult_step_input-0-increase-title"]/../../../span';
+
+  // CHILDREN
+
+  decreaseChildrenLocator =
+    '//*[@id="traveler_selector_children_step_input-0-decrease-title"]/../../../span';
+  increaseChildrenLocator =
+    '//*[@id="traveler_selector_children_step_input-0-increase-title"]/../../../span';
+
+  child1AgeSelector =
+    '//select[@id="age-traveler_selector_children_age_selector-0-0"]';
+  child2AgeSelector =
+    '//select[@id="age-traveler_selector_children_age_selector-0-1"]';
+  child3AgeSelector =
+    '//select[@id="age-traveler_selector_children_age_selector-0-2"]';
+  child4AgeSelector =
+    '//select[@id="age-traveler_selector_children_age_selector-0-3"]';
+  child5AgeSelector =
+    '//select[@id="age-traveler_selector_children_age_selector-0-4"]';
+  child6AgeSelector =
+    '//select[@id="age-traveler_selector_children_age_selector-0-5"]';
+
+  allChildAgeSelectors =
+    '//select[contains(@id , "age-traveler_selector_children_age_selector-0")]';
+
+  travelersDone = '//button[@id="traveler_selector_done_button"]';
 
   // GET THE APP
   phoneNumberField = '//input[@id="phoneNumber"]';
@@ -112,9 +143,35 @@ class HomePage {
       case 'Next Month':
         await this.commands.clickWebElement(this.nextCalendarButtonLocator);
         break;
+
+      case 'Travelers':
+        await this.commands.clickWebElement(this.travelersLocator);
+        break;
+
+      case 'Less Adults':
+        await this.commands.clickWebElement(this.decreaseAdultsLocator);
+        break;
+
+      case 'More Adults':
+        await this.commands.clickWebElement(this.increaseAdultsLocator);
+        break;
+
+      case 'Less Children':
+        await this.commands.clickWebElement(this.decreaseChildrenLocator);
+        break;
+
+      case 'More Children':
+        await this.commands.clickWebElement(this.increaseChildrenLocator);
+        break;
+
+      case 'Done on Travelers':
+        await browser.pause(5000);
+        await this.commands.clickWebElement(this.travelersDone);
+        break;
+
       case 'Get the app button':
         await this.commands.clickWebElement(this.getTheAppButton);
-        await browser.pause(4000);
+        await browser.pause(5000);
         break;
       default:
         break;
@@ -220,6 +277,76 @@ class HomePage {
       count++;
     }
   }
+
+  // TRAVELERS
+  async getTravelerCount(travelerType) {
+    switch (travelerType) {
+      case 'Travelers':
+        var travelerCount = await this.commands.getAttributeWebElement(
+          this.totalTravelersLocator,
+          'value'
+        );
+        return travelerCount;
+      case 'Adults':
+        var travelerCount = await this.commands.getAttributeWebElement(
+          this.adultTravelersLocator,
+          'value'
+        );
+        return travelerCount;
+      case 'Children':
+        var travelerCount = await this.commands.getAttributeWebElement(
+          this.childTravelersLocator,
+          'value'
+        );
+        return travelerCount;
+      default:
+        break;
+    }
+  }
+
+  async selectChildAge(childNumber, childAge) {
+    switch (childNumber) {
+      case 'first':
+        await this.commands.selectDataInDropdown(
+          this.child1AgeSelector,
+          childAge
+        );
+        break;
+      case 'second':
+        await this.commands.selectDataInDropdown(
+          this.child2AgeSelector,
+          childAge
+        );
+        break;
+      case 'third':
+        await this.commands.selectDataInDropdown(
+          this.child3AgeSelector,
+          childAge
+        );
+        break;
+      case 'fourth':
+        await this.commands.selectDataInDropdown(
+          this.child4AgeSelector,
+          childAge
+        );
+        break;
+      case 'fifth':
+        await this.commands.selectDataInDropdown(
+          this.child5AgeSelector,
+          childAge
+        );
+        break;
+      case 'sixth':
+        await this.commands.selectDataInDropdown(
+          this.child6AgeSelector,
+          childAge
+        );
+        break;
+      default:
+        break;
+    }
+  }
+
   // GET THE APP BUTTON
   async scrollBrowserTo(webElement) {
     switch (webElement) {
