@@ -14,6 +14,11 @@ class HomePage {
   saveButton = '//button[contains(text(),"Save")]';
   guardarButton = '//button[contains(text(),"Guardar")]';
 
+  // SIGN IN MENU
+  signInLink = '//button[contains(text(),"Sign in")]';
+  feedbackLink =
+    '//button[contains(text(),"Sign in")]/following-sibling::div//div//a[contains(text(),"Feedback")]';
+
   // DESTINATION
   goingToLocator = '//button[@aria-label="Going to"]';
   goingToDestinationLocator =
@@ -23,17 +28,28 @@ class HomePage {
   autoSuggestionsLocator = '//div[@class="truncate"]//strong';
 
   // CALENDAR
-  calendarOpenLocator = '#date_form_field-btn';
+  datesLocator = '//button[@id="date_form_field-btn"]';
+
   allDatesLocator_starts = '//button[starts-with(@aria-label, "';
   allDatesLocator_ends = '")]';
 
   allDisabledDatesLocator = '//button[contains(@class, "is-disabled")]';
 
   calendarDoneButtonLocator = '//button[text()="Done" and @data-stid]';
-  nextCalendarButtonLocator = '(//button[@data-stid="date-picker-paging"])[2]';
-  prevCalendarButtonLocator = '(//button[@data-stid="date-picker-paging"])[1]';
+
+  prevCalendarButtonLocator =
+    '//button[@data-stid="date-picker-paging"]/preceding-sibling::button';
+  nextCalendarButtonLocator =
+    '//button[@data-stid="date-picker-paging"]/following-sibling::button';
+  prevCalendarButtonDisabled =
+    '//button[@data-stid="date-picker-paging"]/preceding-sibling::button[@disabled]';
+  nextCalendarButtonDisabled =
+    '//button[@data-stid="date-picker-paging"]/following-sibling::button[@disabled]';
+
   leftSideCalendarHeaderLocator =
-    '(//div[@class="uitk-date-picker-month"])[1]//h2';
+    '//div[@class="uitk-date-picker-month"]/preceding-sibling::div//h2';
+  rightSideCalendarHeaderLocator =
+    '//div[@class="uitk-date-picker-month"]/following-sibling::div//h2';
 
   // TRAVELERS
 
@@ -44,6 +60,11 @@ class HomePage {
     '//button[@data-stid="open-room-picker"]/../../../div';
   increaseTravelersLocator =
     '//*[@id="traveler_selector_adult_step_input-0-increase-title"]/../../../span';
+
+  // GET THE APP
+  phoneNumberField = '//input[@id="phoneNumber"]';
+  getTheAppButton = '//button[@id="submitBtn"]';
+  phoneNumberError = '//div[@id="phoneNumber-error"]';
 
   // FUNCTIONS
 
@@ -73,6 +94,33 @@ class HomePage {
     await this.commands.clickWebElement(this.guardarButton);
   }
 
+  // SIGN IN MENU
+  async clickOnWebElement(locator) {
+    switch (locator) {
+      case 'Sign in':
+        await this.commands.clickWebElement(this.signInLink);
+        break;
+      case 'Feedback':
+        await this.commands.clickWebElement(this.feedbackLink);
+        break;
+      case 'Dates':
+        await this.commands.clickWebElement(this.datesLocator);
+        break;
+      case 'Previous Month':
+        await this.commands.clickWebElement(this.prevCalendarButtonLocator);
+        break;
+      case 'Next Month':
+        await this.commands.clickWebElement(this.nextCalendarButtonLocator);
+        break;
+      case 'Get the app button':
+        await this.commands.clickWebElement(this.getTheAppButton);
+        await browser.pause(4000);
+        break;
+      default:
+        break;
+    }
+  }
+
   // DESTINATION
   async enterDestination(destination) {
     await this.commands.clickWebElement(this.goingToLocator);
@@ -95,10 +143,6 @@ class HomePage {
   }
 
   // CALENDAR
-  async openCalendar() {
-    await this.commands.clickWebElement(this.calendarOpenLocator);
-  }
-
   async arePastDatesDisabled() {
     var pastDatesAreDisabled = false;
     const allDisabledDates = await this.commands.getAllDisabledDates(
@@ -135,6 +179,13 @@ class HomePage {
     await this.commands.selectDateInCalendar(allDatesLocator, dateArray[1]);
   }
 
+  async getDisplayedMonth() {
+    var displayedMonth = await this.commands.getTextOfWebElement(
+      this.leftSideCalendarHeaderLocator
+    );
+    return displayedMonth;
+  }
+
   async clickDoneOnCalendar() {
     await this.commands.clickWebElement(this.calendarDoneButtonLocator);
   }
@@ -167,6 +218,46 @@ class HomePage {
       await this.commands.clickWebElement(this.nextCalendarButtonLocator);
       await browser.pause(1000);
       count++;
+    }
+  }
+  // GET THE APP BUTTON
+  async scrollBrowserTo(webElement) {
+    switch (webElement) {
+      case 'Get the app button':
+        await this.commands.scrollToWebElement(this.getTheAppButton);
+      default:
+        break;
+    }
+  }
+
+  async enterDataInField(data, field) {
+    switch (field) {
+      case 'Phone number':
+        await this.commands.typeInWebElement(this.phoneNumberField, data);
+        break;
+      default:
+        break;
+    }
+  }
+
+  async verifyIsDisplayed(webElement) {
+    switch (webElement) {
+      case 'back button':
+        return await this.commands.isWebElementDisplayed(
+          this.prevCalendarButtonDisabled
+        );
+        break;
+      case 'next button':
+        return await this.commands.isWebElementDisplayed(
+          this.nextCalendarButtonDisabled
+        );
+        break;
+      case 'Please enter a valid phone number.':
+        return await this.commands.isWebElementDisplayed(this.phoneNumberError);
+
+        break;
+      default:
+        break;
     }
   }
 }
