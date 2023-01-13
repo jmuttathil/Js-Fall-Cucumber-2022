@@ -100,17 +100,7 @@ class Commands {
    * input: string(locator)
    */
   async isWebElementDisplayed(locator) {
-    /*
-            1. find the webElement
-            2. if found, check if element is displayed
-            3. otherwise, wait for 1-second then start from step-1
-
-            do above flow for 30-seconds
-        */
-    await $(locator).waitForDisplayed({
-      timeout: 120000,
-      timeoutMsg: 'Element is not displayed',
-    });
+    await browser.pause(100);
     return await $(locator).isDisplayed();
   }
 
@@ -127,9 +117,9 @@ class Commands {
 
             do above flow for 30-seconds
         */
-    await $(locator).waitForEnabled({
+    await $(locator).waitForDisplayed({
       timeout: 120000,
-      timeoutMsg: 'Element is not enabled',
+      timeoutMsg: 'Element is not displayed',
     });
     return await $(locator).isEnabled();
   }
@@ -308,11 +298,13 @@ class Commands {
     const allSuggestions = await $$(locator);
     for (const suggestion of allSuggestions) {
       const webText = await suggestion.getText();
+      console.log(`\n\n\n\n\n evaluating: '${webText}' \n`);
       if (
         webText.toLowerCase().localeCompare(userLikeToSelect.toLowerCase()) ===
         0
       ) {
         await suggestion.click();
+
         break;
       }
     }
