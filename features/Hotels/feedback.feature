@@ -3,7 +3,7 @@ Feature: feedback
     Background:
         Given I am on hotels
 
-    @sprint3
+@sprint1 @TC-24
     Scenario: Verify blank feedback form produces expected error message
         When on HomePage I click on Sign in
         When on HomePage I click on Feedback
@@ -12,7 +12,7 @@ Feature: feedback
         Then on Feedback I verify PLEASE FILL IN THE REQUIRED INFORMATION HIGHLIGHTED BELOW message is displayed
         Then on Feedback I verify STAR RATING SECTION IN A RED DOTTED BOX is displayed
 
-    @sprint4
+@sprint1 @TC-25
     Scenario: Verify filled out feedback form produces expected message
         When on HomePage I click on Sign in
         When on HomePage I click on Feedback

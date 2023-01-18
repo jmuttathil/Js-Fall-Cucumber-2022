@@ -16,6 +16,8 @@ class HomePage {
 
   // SIGN IN MENU
   signInLink = '//button[contains(text(),"Sign in")]';
+  signInButton = '//a[@data-stid="link-header-account-signin"]';
+  signUpLink = '//a[@data-stid="link-header-account-signup"]';
   feedbackLink =
     '//button[contains(text(),"Sign in")]/following-sibling::div//div//a[contains(text(),"Feedback")]';
 
@@ -54,12 +56,51 @@ class HomePage {
   // TRAVELERS
 
   travelersLocator = '//button[@data-stid="open-room-picker"]/../../../div';
-  decreaseTravelersLocator =
+
+  totalTravelersLocator = '//button[@data-stid="open-room-picker"]/../input';
+  adultTravelersLocator = '//input[@id="traveler_selector_adult_step_input-0"]';
+  childTravelersLocator =
+    '//input[@id="traveler_selector_children_step_input-0"]';
+
+  // ADULTS
+
+  decreaseAdultsLocator =
     '//*[@id="traveler_selector_adult_step_input-0-decrease-title"]/../../../span';
-  adultTravelersLocator =
-    '//button[@data-stid="open-room-picker"]/../../../div';
-  increaseTravelersLocator =
+  increaseAdultsLocator =
     '//*[@id="traveler_selector_adult_step_input-0-increase-title"]/../../../span';
+
+  // CHILDREN
+
+  decreaseChildrenLocator =
+    '//*[@id="traveler_selector_children_step_input-0-decrease-title"]/../../../span';
+  increaseChildrenLocator =
+    '//*[@id="traveler_selector_children_step_input-0-increase-title"]/../../../span';
+
+  decreaseChildrenDisabled =
+    '//*[@id="traveler_selector_children_step_input-0-decrease-title"]/../../../../button[@disabled]';
+  increaseChildrenDisabled =
+    '//*[@id="traveler_selector_children_step_input-0-increase-title"]/../../../../button[@disabled]';
+
+  child1AgeSelector =
+    '//select[@id="age-traveler_selector_children_age_selector-0-0"]';
+  child2AgeSelector =
+    '//select[@id="age-traveler_selector_children_age_selector-0-1"]';
+  child3AgeSelector =
+    '//select[@id="age-traveler_selector_children_age_selector-0-2"]';
+  child4AgeSelector =
+    '//select[@id="age-traveler_selector_children_age_selector-0-3"]';
+  child5AgeSelector =
+    '//select[@id="age-traveler_selector_children_age_selector-0-4"]';
+  child6AgeSelector =
+    '//select[@id="age-traveler_selector_children_age_selector-0-5"]';
+
+  allChildAgeSelectors =
+    '//select[contains(@id , "age-traveler_selector_children_age_selector-0")]';
+
+  travelersDone = '//button[@id="traveler_selector_done_button"]';
+
+  // SEARCH
+  searchButtonLocator = '//button[@id="search_button"]';
 
   // GET THE APP
   phoneNumberField = '//input[@id="phoneNumber"]';
@@ -100,10 +141,17 @@ class HomePage {
       case 'Sign in':
         await this.commands.clickWebElement(this.signInLink);
         break;
+      case 'Sign in button':
+        await this.commands.clickWebElement(this.signInButton);
+        break;
+      case 'SignUp link':
+        await this.commands.clickWebElement(this.signUpLink);
+        break;
       case 'Feedback':
         await this.commands.clickWebElement(this.feedbackLink);
         break;
-      case 'Dates':
+      // CALENDAR
+      case 'the Calendar':
         await this.commands.clickWebElement(this.datesLocator);
         break;
       case 'Previous Month':
@@ -112,9 +160,38 @@ class HomePage {
       case 'Next Month':
         await this.commands.clickWebElement(this.nextCalendarButtonLocator);
         break;
+      case 'the Calendar Done button':
+        await this.commands.clickWebElement(this.calendarDoneButtonLocator);
+        break;
+      // TRAVELERS
+      case 'Travelers':
+        await this.commands.clickWebElement(this.travelersLocator);
+        break;
+      case 'Less Adults':
+        await this.commands.clickWebElement(this.decreaseAdultsLocator);
+        break;
+      case 'More Adults':
+        await this.commands.clickWebElement(this.increaseAdultsLocator);
+        break;
+      case 'Less Children':
+        await this.commands.clickWebElement(this.decreaseChildrenLocator);
+        break;
+      case 'More Children':
+        await this.commands.clickWebElement(this.increaseChildrenLocator);
+        break;
+      case 'Done on Travelers':
+        await browser.pause(1000);
+        await this.commands.clickWebElement(this.travelersDone);
+        break;
+      // SEARCH
+      case 'the Search button':
+        await browser.pause(4000);
+        await this.commands.clickWebElement(this.searchButtonLocator);
+        break;
+      // FOOTER
       case 'Get the app button':
         await this.commands.clickWebElement(this.getTheAppButton);
-        await browser.pause(4000);
+        await browser.pause(1000);
         break;
       default:
         break;
@@ -220,6 +297,151 @@ class HomePage {
       count++;
     }
   }
+
+  // TRAVELERS
+  async getTravelerCount(travelerType) {
+    switch (travelerType) {
+      case 'Travelers':
+        var travelerCount = await this.commands.getAttributeWebElement(
+          this.totalTravelersLocator,
+          'value'
+        );
+        return travelerCount;
+      case 'Adults':
+        var travelerCount = await this.commands.getAttributeWebElement(
+          this.adultTravelersLocator,
+          'value'
+        );
+        return travelerCount;
+      case 'Children':
+        var travelerCount = await this.commands.getAttributeWebElement(
+          this.childTravelersLocator,
+          'value'
+        );
+        return travelerCount;
+      default:
+        break;
+    }
+  }
+
+  async selectChildAge(childNumber, childAge) {
+    switch (childNumber) {
+      case 'first':
+        await this.commands.selectDataInDropdown(
+          this.child1AgeSelector,
+          childAge
+        );
+        break;
+      case 'second':
+        await this.commands.selectDataInDropdown(
+          this.child2AgeSelector,
+          childAge
+        );
+        break;
+      case 'third':
+        await this.commands.selectDataInDropdown(
+          this.child3AgeSelector,
+          childAge
+        );
+        break;
+      case 'fourth':
+        await this.commands.selectDataInDropdown(
+          this.child4AgeSelector,
+          childAge
+        );
+        break;
+      case 'fifth':
+        await this.commands.selectDataInDropdown(
+          this.child5AgeSelector,
+          childAge
+        );
+        break;
+      case 'sixth':
+        await this.commands.selectDataInDropdown(
+          this.child6AgeSelector,
+          childAge
+        );
+        break;
+      default:
+        break;
+    }
+  }
+
+  async verifyDropDownNumber(number) {
+    let allChildAgeSelectorElements = await this.commands.findAllWebElement(
+      this.allChildAgeSelectors
+    );
+    let childAgeSelectorCount = allChildAgeSelectorElements.length;
+    console.log(
+      `\n\n\n There are ${childAgeSelectorCount} Children-age dropdowns\n\n`
+    );
+    let verification = false;
+    if (childAgeSelectorCount == number) {
+      verification = true;
+    }
+    return verification;
+  }
+
+  async isButtonEnabled(element, property) {
+    switch (element) {
+      case 'minus-button':
+        switch (property) {
+          case 'enabled':
+            let minusButtonIsEnabled = await this.commands.isWebElementEnabled(
+              this.decreaseChildrenLocator
+            );
+            console.log(
+              `\n\n\n minusButtonIsEnabled: ${minusButtonIsEnabled}\n\n`
+            );
+            return minusButtonIsEnabled;
+            break;
+          case 'disabled':
+            let minusButtonIsDisabled = await this.commands.isWebElementEnabled(
+              this.decreaseChildrenDisabled
+            );
+            console.log(
+              `\n\n\n minusButtonIsDisabled: ${minusButtonIsDisabled}\n\n`
+            );
+            return minusButtonIsDisabled;
+            break;
+        }
+        break;
+
+      case 'plus-button':
+        switch (property) {
+          case 'enabled':
+            let plusButtonIsEnabled = await this.commands.isWebElementEnabled(
+              this.increaseChildrenLocator
+            );
+            console.log(
+              `\n\n\n plusButtonIsEnabled: ${plusButtonIsEnabled}\n\n`
+            );
+            return plusButtonIsEnabled;
+            break;
+          case 'disabled':
+            let plusButtonIsDisabled = await this.commands.isWebElementEnabled(
+              this.increaseChildrenDisabled
+            );
+            console.log(
+              `\n\n\n plusButtonIsDisabled: ${plusButtonIsDisabled}\n\n`
+            );
+            return plusButtonIsDisabled;
+            break;
+        }
+
+        break;
+    }
+  }
+
+  async verifyAgeDropDownDisplayed() {
+    let areChildAgeSelectorsDisplayed =
+      await this.commands.isWebElementDisplayed(this.allChildAgeSelectors);
+    console.log(
+      `\n\n\n areChildAgeSelectorsDisplayed: ${areChildAgeSelectorsDisplayed}\n\n`
+    );
+    return areChildAgeSelectorsDisplayed;
+  }
+
   // GET THE APP BUTTON
   async scrollBrowserTo(webElement) {
     switch (webElement) {

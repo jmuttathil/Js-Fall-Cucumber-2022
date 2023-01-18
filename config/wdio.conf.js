@@ -24,9 +24,7 @@ exports.config = {
   //
   specs: ['../features/**/*.feature'],
   // Patterns to exclude.
-  exclude: [
-    // 'path/to/excluded/files'
-  ],
+  exclude: ['../features/Hotels/disabled/*'],
   //
   // ============
   // Capabilities
